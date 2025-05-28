@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Your App</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-purple-600 min-h-screen flex items-center justify-center p-4">
+    <div class="bg-white rounded-2xl shadow-2xl w-full max-w-md p-8 space-y-6">
+        <!-- Logo or Title -->
+        <div class="text-center">
+            <h1 class="text-3xl font-bold text-gray-900">Welcome Back!</h1>
+            <p class="text-gray-500 mt-2">Please sign in to your account</p>
+        </div>
+
+        <!-- Login Form -->
+        <form action="/login" method="POST" class="space-y-6">
+            <div class="space-y-4">
+                <div class="relative">
+                    <i class="fas fa-envelope absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="email" name="email" 
+                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        placeholder="Email address" required>
+                </div>
+                
+                <div class="relative">
+                    <i class="fas fa-lock absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"></i>
+                    <input type="password" name="password" 
+                        class="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:border-blue-500"
+                        placeholder="Password" required>
+                </div>
+            </div>
+
+            <div class="flex items-center justify-between">
+                <label class="flex items-center">
+                    <input type="checkbox" class="w-4 h-4 text-blue-600">
+                    <span class="ml-2 text-sm text-gray-600">Remember me</span>
+                </label>
+                <a href="#" class="text-sm text-blue-600 hover:underline">Forgot password?</a>
+            </div>
+
+            <button type="submit" 
+                class="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition duration-300 shadow-lg">
+                Sign In
+            </button>
+        </form>
+
+        <!-- Divider -->
+        <div class="relative">
+            <div class="absolute inset-0 flex items-center">
+                <div class="w-full border-t border-gray-300"></div>
+            </div>
+            <div class="relative flex justify-center text-sm">
+                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+            </div>
+        </div>
+
+        <!-- Social Login -->
+        <div class="grid grid-cols-2 gap-4">
+            <button class="flex items-center justify-center py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-300">
+                <i class="fab fa-google text-red-500 mr-2"></i>
+                Google
+            </button>
+            <button class="flex items-center justify-center py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition duration-300">
+                <i class="fab fa-github text-gray-800 mr-2"></i>
+                GitHub
+            </button>
+        </div>
+
+        <!-- Sign up link -->
+        <p class="text-center text-gray-600 text-sm">
+            Don't have an account? 
+            <a href="/" class="text-blue-600 hover:underline font-semibold">Sign up</a>
+        </p>
+    </div>
+</body>
+</html>

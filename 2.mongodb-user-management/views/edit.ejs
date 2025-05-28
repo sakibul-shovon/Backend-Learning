@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-zinc-900 text-white p-10">
+    <div class="w-full h-full">
+        <div class="flex justify-between mb-10">
+            <a class="text-zinc-200" href="/read">Read Users</a>
+        </div>
+        <h1 class="text-3xl mb-6">Update User</h1>
+        <form action="/update/<%= user._id %>" method="post" class="flex gap-3">
+            <input name="name" type="text" placeholder="name" class="px-5 py-2 border-2 border-zinc-800 outline-none bg-zinc-800 rounded-md" value="<%= user.name %>"  />
+            <input name="email" type="email" placeholder="email" class="px-5 py-2 border-2 border-zinc-800 outline-none bg-zinc-800 rounded-md"  value="<%= user.email %>"/>
+            <input name="image" type="text" placeholder="image" class="px-5 py-2 border-2 border-zinc-800 outline-none bg-zinc-800 rounded-md"  value="<%= user.image %>"/>
+            <input type="submit" value="Update User" class="px-5 py-2 bg-red-500 rounded-lg ml-3 cursor-pointer" />
+        </form>
+    </div>
+</body>
+</html>
