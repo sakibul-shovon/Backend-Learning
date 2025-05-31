@@ -19,9 +19,10 @@ app.get("/login", (req, res) => {
   res.render("login");
 });
 
-app.get("/profile", isLoggedIn, (req, res) => {
-  console.log(req.user);
-  res.render("login");
+app.get("/profile", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  await user.populate("posts");
+  res.render("profile", { user });
 });
 
 app.post("/login", async (req, res) => {
@@ -32,18 +33,32 @@ app.post("/login", async (req, res) => {
 
   bcrypt.compare(password, user.password, function (err, result) {
     if (result) {
-      res.status(200).send("you can login");
       let token = jwt.sign(
         { email: user.email, userid: user._id },
         "secretkey"
       );
       res.cookie("token", token);
-    } else res.redirect("/login");
+      res.status(200).send("you can login");
+    } else {
+      res.redirect("/login");
+    }
   });
 });
 
 app.get("/logout", async (req, res) => {
   res.cookie("token", ""), res.redirect("/login");
+});
+
+app.post("/posts", isLoggedIn, async (req, res) => {
+  let user = await userModel.findOne({ email: req.user.email });
+  let { content } = req.body;
+  let post = await postModel.create({
+    content,
+    user: user._id,
+  });
+  user.posts.push(post._id);
+  await user.save();
+  res.redirect("/profile");
 });
 
 app.post("/register", async (req, res) => {
@@ -62,7 +77,6 @@ app.post("/register", async (req, res) => {
       email,
       password: hash,
       username,
-      name,
       age: parseInt(age),
     });
 
@@ -72,6 +86,28 @@ app.post("/register", async (req, res) => {
   } catch (error) {
     res.status(500).send("Error registering user");
   }
+});
+app.get('/like/:id', isLoggedIn, async (req, res) => {
+  let post = await postModel.findById(req.params.id).populate("user");
+  if (!post.likes.includes(req.user.userid)) {
+    post.likes.push(req.user.userid); // Add like
+  } else {
+    post.likes.splice(post.likes.indexOf(req.user.userid), 1); // Remove like
+  }
+  await post.save();
+  res.redirect("/profile");
+});
+
+app.get('/edit/:id', isLoggedIn, async (req, res) => {
+   let post = await postModel.findById(req.params.id).populate("user");
+   res.render("edit", { post });
+});
+
+
+
+app.post('/update/:id', isLoggedIn, async (req, res) => {
+   let post = await postModel.findOneAndUpdate({ _id: req.params.id }, { content: req.body.content }, { new: true });
+   res.redirect("/profile");
 });
 
 function isLoggedIn(req, res, next) {
